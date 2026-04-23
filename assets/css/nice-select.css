@@ -42,6 +42,14 @@
 .nice-select.disabled:after {
 	border-color: #cccccc;
 }
+.nice-select:after {
+    content: "\f107";
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome";
+    font-weight: 900;
+    right: 0;
+    position: absolute;
+    top: 0;
+}
 .nice-select.wide {
 	width: 100%;
 }
