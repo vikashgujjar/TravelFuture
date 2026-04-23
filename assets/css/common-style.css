@@ -1144,7 +1144,7 @@ label {
   transition: all 0.3s;
 }
 
-.theme-btn i {
+.theme-btn iconify-icon {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1178,7 +1178,7 @@ label {
   justify-content: space-between;
 }
 
-.theme-btn.style-one i {
+.theme-btn.style-one iconify-icon {
   background-color: var(--white-color);
   color: var(--primary-color);
 }
@@ -1187,7 +1187,7 @@ label {
   background-color: var(--secondary-color);
 }
 
-.theme-btn.style-one:hover i {
+.theme-btn.style-one:hover iconify-icon {
   color: var(--secondary-color);
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);

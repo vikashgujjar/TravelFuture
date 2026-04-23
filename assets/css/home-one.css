@@ -382,7 +382,7 @@ Version: 1.0
   font-size: 14px;
 }
 
-.hero-search-wrapper .hero-search label i {
+.hero-search-wrapper .hero-search label iconify-iconi {
   margin-right: 10px;
   font-size: 16px;
 }
@@ -403,7 +403,7 @@ Version: 1.0
   font-family: var(--heading-font);
 }
 
-.hero-search-wrapper .hero-search .submit-btn i {
+.hero-search-wrapper .hero-search .submit-btn iconify-icon {
   margin-left: 20px;
 }
 
@@ -609,7 +609,7 @@ Version: 1.0
   margin-bottom: 15px;
 }
 
-.Future-iconic-item .content h5 i {
+.Future-iconic-item .content h5 iconify-icon {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
@@ -847,7 +847,7 @@ Version: 1.0
   margin-bottom: 20px;
 }
 
-.Future-tour-item .content-wrap .content span i {
+.Future-tour-item .content-wrap .content span iconify-icon {
   margin-right: 10px;
 }
 
@@ -893,7 +893,7 @@ Version: 1.0
   display: block;
 }
 
-.Future-tour-item .content-wrap .tour-meta .meta-item .meta-title i {
+.Future-tour-item .content-wrap .tour-meta .meta-item .meta-title iconify-iconi {
   margin-right: 5px;
   color: var(--secondary-color);
 }
@@ -1188,7 +1188,7 @@ Version: 1.0
   color: var(--heading-color);
 }
 
-.Future-offer-item .content .theme-btn i {
+.Future-offer-item .content .theme-btn iconify-icon {
   background-color: var(--secondary-color);
   color: var(--white-color);
 }
@@ -1433,7 +1433,7 @@ Version: 1.0
 }
 
 /*===   09# Testimonial Section CSS ===*/
-.ratings i {
+.ratings iconify-icon {
   color: var(--secondary-color);
 }
 
@@ -1701,7 +1701,7 @@ Version: 1.0
   margin-bottom: 25px;
 }
 
-.Future-iconic-box-two .content h6 i {
+.Future-iconic-box-two .content h6 iconify-icon {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
@@ -1843,7 +1843,7 @@ Version: 1.0
   }
 }
 
-.blog-post-item .content .post-meta span i {
+.blog-post-item .content .post-meta span iconify-icon {
   margin-right: 7px;
 }
 
@@ -1909,7 +1909,7 @@ Version: 1.0
   color: var(--text-color);
 }
 
-.blog-post-item .content .post-footer .theme-btn.style-one i {
+.blog-post-item .content .post-footer .theme-btn.style-one iconify-icon {
   color: var(--text-color);
 }
 
@@ -1918,7 +1918,7 @@ Version: 1.0
   color: var(--white-color);
 }
 
-.blog-post-item .content .post-footer .theme-btn.style-one:hover i {
+.blog-post-item .content .post-footer .theme-btn.style-one:hover iconify-icon {
   color: var(--primary-color);
 }
 
