@@ -1,0 +1,3824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>FutureFlight — Flights, Hotels, Trains, Buses, Cabs</title>
+  <meta name="description"
+    content="FutureFlight — Book flights, hotels, trains, buses and cabs. Premium travel planning made effortless." />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --white: #ffffff;
+      --bg: #f7f9ff;
+      --bg2: #eef2ff;
+      --navy: #0a1628;
+      --navy2: #162040;
+      --blue: #1a56e8;
+      --blue2: #3b7cf4;
+      --blue-light: #e8effe;
+      --coral: #ff5f3d;
+      --amber: #f59e0b;
+      --green: #10b981;
+      --text: #0a1628;
+      --text2: #4b5675;
+      --text3: #8b95b0;
+      --border: #e4e9f7;
+      --shadow-sm: 0 2px 12px rgba(10, 22, 40, 0.06);
+      --shadow-md: 0 8px 32px rgba(10, 22, 40, 0.10);
+      --shadow-lg: 0 20px 60px rgba(10, 22, 40, 0.14);
+      --shadow-blue: 0 8px 28px rgba(26, 86, 232, 0.22);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══ SCROLLBAR ══ */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f0f4ff;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1a56e8;
+      border-radius: 3px;
+    }
+
+    /* ══ NAVBAR ══ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(228, 233, 247, 0.7);
+      box-shadow: 0 1px 0 rgba(26, 86, 232, 0.06);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 68px;
+      gap: 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #1a56e8, #3b7cf4);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(26, 86, 232, 0.3);
+    }
+
+    .logo-mark svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .logo-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -.02em;
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-link {
+      padding: 8px 18px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text2);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all .2s;
+      letter-spacing: -.01em;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+      transition: all .2s;
+      transform: translateX(-50%);
+    }
+
+    .nav-link.active {
+      color: var(--blue);
+      background: var(--blue-light);
+    }
+
+    .nav-link.active::after {
+      width: 20px;
+    }
+
+    .nav-link:hover:not(.active) {
+      color: var(--navy);
+      background: var(--bg);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .btn-ghost {
+      padding: 9px 20px;
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--blue);
+      border: 1.5px solid var(--blue);
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .btn-ghost:hover {
+      background: var(--blue-light);
+    }
+
+    .btn-solid {
+      padding: 9px 22px;
+      font-size: .84rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: var(--shadow-blue);
+      font-family: 'Sora', sans-serif;
+    }
+
+    .btn-solid:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(26, 86, 232, 0.32);
+    }
+
+    /* ══ PAGES ══ */
+    .page {
+      display: none;
+      animation: fadeIn .4s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ══ HERO ══ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(140deg, #f0f4ff 0%, #ffffff 50%, #fef7f0 100%);
+      min-height: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-blob1 {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26, 86, 232, .07) 0%, transparent 70%);
+      top: -200px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-blob2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 95, 61, .06) 0%, transparent 70%);
+      bottom: -100px;
+      left: 5%;
+      pointer-events: none;
+    }
+
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(26, 86, 232, .12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 32px 60px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26, 86, 232, .08);
+      border: 1px solid rgba(26, 86, 232, .15);
+      color: var(--blue);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.4);
+        opacity: .6;
+      }
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 10px;
+      letter-spacing: -.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--blue);
+    }
+
+    .hero-desc {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: var(--text2);
+      max-width: 440px;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta {
+      padding: 14px 32px;
+      font-size: .92rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      box-shadow: var(--shadow-blue);
+      transition: all .25s;
+      font-family: 'Sora', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(26, 86, 232, .35);
+    }
+
+    .hero-cta svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      color: var(--text3);
+      font-weight: 500;
+    }
+
+    .hero-trust-avatars {
+      display: flex;
+    }
+
+    .hero-trust-avatars div {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      overflow: hidden;
+      margin-left: -8px;
+      background: linear-gradient(135deg, var(--blue-light), var(--bg2));
+    }
+
+    .hero-trust-avatars div:first-child {
+      margin-left: 0;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(10, 22, 40, .5) 100%);
+    }
+
+    .hero-float-card {
+      position: absolute;
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .hfc1 {
+      bottom: -20px;
+      left: -40px;
+    }
+
+    .hfc2 {
+      top: 24px;
+      right: -30px;
+      animation-delay: -2.5s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .hfc-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .hfc-icon.blue {
+      background: var(--blue-light);
+    }
+
+    .hfc-icon.coral {
+      background: #fff1ee;
+    }
+
+    .hfc-label {
+      font-size: .7rem;
+      color: var(--text3);
+      font-weight: 500;
+    }
+
+    .hfc-value {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .hfc-sub {
+      font-size: .7rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 36px;
+    }
+
+    .hero-stat {
+      background: #fff;
+      padding: 16px 20px;
+    }
+
+    .hero-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+    }
+
+    .hero-stat-num span {
+      color: var(--blue);
+    }
+
+    .hero-stat-label {
+      font-size: .72rem;
+      color: var(--text3);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* ══ SEARCH WIDGET ══ */
+    .search-widget-wrap {
+      padding: 0 32px;
+      position: relative;
+      z-index: 10;
+      margin-top: 0px;
+    }
+
+    .search-widget {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .sw-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      padding: 0 8px;
+    }
+
+    .sw-tab {
+      padding: 0 24px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--text3);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      transition: all .2s;
+      margin-bottom: -1px;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sw-tab svg {
+      width: 16px;
+      height: 16px;
+      opacity: .6;
+      transition: opacity .2s;
+    }
+
+    .sw-tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .sw-tab.active svg {
+      opacity: 1;
+    }
+
+    .sw-tab:hover:not(.active) {
+      color: var(--navy);
+      background: var(--bg);
+    }
+
+    .sw-body {
+      padding: 20px 24px 24px;
+    }
+
+    .sw-trip-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .sw-pill {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: .76rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sw-pill.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px rgba(26, 86, 232, .25);
+    }
+
+    .sw-pill:hover:not(.active) {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .sw-fields {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .sw-field {
+      flex: 1;
+      padding: 14px 18px;
+      border-right: 1px solid var(--border);
+      position: relative;
+      cursor: text;
+      transition: background .2s;
+    }
+
+    .sw-field:hover {
+      background: #fff;
+    }
+
+    .sw-field:last-child {
+      border-right: none;
+    }
+
+    .sw-field-icon {
+      font-size: .8rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sw-field-icon span {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text3);
+    }
+
+    .sw-field input,
+    .sw-field select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy);
+      font-family: 'Sora', sans-serif;
+      cursor: pointer;
+    }
+
+    .sw-field input::placeholder {
+      color: var(--text3);
+      font-weight: 400;
+    }
+
+    .sw-field input:focus,
+    .sw-field select:focus {
+      outline: none;
+    }
+
+    .sw-field select {
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .sw-field-hint {
+      font-size: .7rem;
+      color: var(--text3);
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    .sw-search-btn {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      margin-left: 12px;
+    }
+
+    .sw-search-btn button {
+      height: 100%;
+      padding: 0 28px;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .25s;
+      box-shadow: var(--shadow-blue);
+      font-family: 'Sora', sans-serif;
+      white-space: nowrap;
+    }
+
+    .sw-search-btn button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(26, 86, 232, .35);
+    }
+
+    .sw-search-btn button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .sw-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* ══ SECTIONS ══ */
+    .section {
+      padding: 90px 32px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .sec-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .sec-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 14px;
+      letter-spacing: -.02em;
+    }
+
+    .sec-title em {
+      font-style: italic;
+      color: var(--blue);
+    }
+
+    .sec-desc {
+      font-size: .92rem;
+      line-height: 1.75;
+      color: var(--text2);
+      max-width: 520px;
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 52px;
+      gap: 24px;
+    }
+
+    .sec-head-left {
+      flex: 1;
+    }
+
+    .sec-head .see-all {
+      padding: 10px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: #fff;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sec-head .see-all:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .sec-head .see-all svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ══ SERVICE CARDS ══ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .svc-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue2));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .svc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+
+    .svc-card:hover::before {
+      opacity: 1;
+    }
+
+    .svc-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .svc-card h4 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -.01em;
+    }
+
+    .svc-card p {
+      font-size: .82rem;
+      line-height: 1.6;
+      color: var(--text2);
+    }
+
+    /* ══ DEAL CARDS ══ */
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .deal-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all .3s;
+      cursor: pointer;
+      group: true;
+    }
+
+    .deal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+
+    .deal-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .deal-img-wrap img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+
+    .deal-card:hover .deal-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .deal-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .deal-price-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #fff;
+      color: var(--blue);
+      font-size: .8rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .deal-body {
+      padding: 20px;
+    }
+
+    .deal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 5px;
+      letter-spacing: -.01em;
+    }
+
+    .deal-loc {
+      font-size: .78rem;
+      color: var(--text3);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .deal-loc svg {
+      width: 12px;
+      height: 12px;
+      color: var(--blue);
+    }
+
+    .deal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .deal-stars {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .deal-stars svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--amber);
+    }
+
+    .deal-stars span {
+      font-size: .76rem;
+      color: var(--text2);
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .deal-action {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .deal-action:hover {
+      background: var(--blue);
+    }
+
+    .deal-action:hover svg {
+      stroke: #fff;
+    }
+
+    .deal-action svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--blue);
+      transition: stroke .2s;
+    }
+
+    /* ══ DESTINATIONS ══ */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 16px;
+    }
+
+    .dest-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .dest-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+
+    .dest-card:hover img {
+      transform: scale(1.07);
+    }
+
+    .dest-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 22, 40, .85) 0%, rgba(10, 22, 40, .1) 50%, transparent 100%);
+    }
+
+    .dest-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+    }
+
+    .dest-info h3 {
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
+
+    .dest-info p {
+      color: rgba(255, 255, 255, .7);
+      font-size: .75rem;
+    }
+
+    .dest-info .dest-price {
+      margin-top: 8px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--amber);
+    }
+
+    .dest-card-big {
+      grid-row: span 2;
+    }
+
+    .dest-card-big .dest-info h3 {
+      font-size: 1.7rem;
+    }
+
+    .dest-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 255, 255, .15);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, .25);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* ══ AIRLINES ══ */
+    .airlines-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .airline-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all .3s;
+      cursor: pointer;
+    }
+
+    .airline-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--blue-light);
+    }
+
+    .airline-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .airline-body {
+      padding: 16px;
+    }
+
+    .airline-name {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .airline-route {
+      font-size: .75rem;
+      color: var(--text3);
+    }
+
+    .airline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(16, 185, 129, .08);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ══ STEPS ══ */
+    .steps-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .steps-connector {
+      position: absolute;
+      top: 52px;
+      left: calc(16.66% + 16px);
+      right: calc(16.66% + 16px);
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--blue) 0, var(--blue) 10px, transparent 10px, transparent 20px);
+      z-index: 0;
+    }
+
+    .step-card {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 36px 28px;
+      border: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+      transition: all .3s;
+    }
+
+    .step-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .step-card.featured {
+      background: linear-gradient(145deg, var(--navy), var(--navy2));
+      border-color: transparent;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      color: var(--blue-light);
+      line-height: 1;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .step-card.featured .step-num {
+      color: rgba(255, 255, 255, .12);
+    }
+
+    .step-icon-ring {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      border: 1.5px solid var(--border);
+    }
+
+    .step-card.featured .step-icon-ring {
+      background: rgba(255, 255, 255, .08);
+      border-color: rgba(255, 255, 255, .15);
+    }
+
+    .step-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      letter-spacing: -.01em;
+    }
+
+    .step-card.featured h4 {
+      color: #fff;
+    }
+
+    .step-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-bullets li {
+      font-size: .8rem;
+      color: var(--text2);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .step-card.featured .step-bullets li {
+      color: rgba(255, 255, 255, .65);
+    }
+
+    .step-bullets li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .step-card.featured .step-bullets li::before {
+      background: var(--coral);
+    }
+
+    /* ══ FAQ ══ */
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .faq-visual {
+      position: relative;
+    }
+
+    .faq-visual img {
+      width: 100%;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      display: block;
+    }
+
+    .faq-visual-card {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .faq-visual-card .fvc-title {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--text3);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .faq-rating {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 6px;
+    }
+
+    .faq-rating svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--amber);
+    }
+
+    .faq-rating span {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-left: 4px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      padding: 18px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .faq-q-text {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: -.01em;
+    }
+
+    .faq-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .25s;
+    }
+
+    .faq-toggle svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--blue);
+      transition: transform .25s;
+    }
+
+    .faq-item.open .faq-toggle {
+      background: var(--blue);
+    }
+
+    .faq-item.open .faq-toggle svg {
+      stroke: #fff;
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+      font-size: .85rem;
+      line-height: 1.75;
+      color: var(--text2);
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 18px;
+    }
+
+    /* ══ PAYMENT ══ */
+    .pay-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pay-chip {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 22px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all .25s;
+      cursor: default;
+    }
+
+    .pay-chip:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      box-shadow: 0 4px 16px rgba(26, 86, 232, .1);
+    }
+
+    .pay-chip .pay-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ══ NEWSLETTER ══ */
+    .newsletter {
+      margin: 0 32px 80px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #0a1628 0%, #162040 40%, #1a2f5e 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .nl-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, .04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .nl-glow1 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26, 86, 232, .25), transparent 70%);
+      top: -200px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .nl-glow2 {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 95, 61, .15), transparent 70%);
+      bottom: -100px;
+      left: 200px;
+      pointer-events: none;
+    }
+
+    .nl-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nl-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .4);
+      margin-bottom: 10px;
+    }
+
+    .nl-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .nl-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .nl-desc {
+      font-size: .88rem;
+      color: rgba(255, 255, 255, .55);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .nl-form {
+      display: flex;
+      gap: 0;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .nl-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 14px 20px;
+      font-size: .88rem;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .nl-form input::placeholder {
+      color: rgba(255, 255, 255, .35);
+    }
+
+    .nl-form input:focus {
+      outline: none;
+    }
+
+    .nl-form button {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #fff;
+      border: none;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Sora', sans-serif;
+      white-space: nowrap;
+    }
+
+    .nl-form button:hover {
+      background: linear-gradient(135deg, #1244c8, #2563eb);
+    }
+
+    .nl-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .nl-feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      transition: all .2s;
+    }
+
+    .nl-feature:hover {
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .nl-feat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .nl-feat-text h4 {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .nl-feat-text p {
+      font-size: .75rem;
+      color: rgba(255, 255, 255, .45);
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: #fff;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 32px 32px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr;
+      gap: 48px;
+      margin-bottom: 56px;
+    }
+
+    .footer-brand .logo-text {
+      font-size: 1.2rem;
+    }
+
+    .footer-tagline {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: var(--text2);
+      margin: 16px 0 24px;
+      max-width: 240px;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: var(--text2);
+      margin-bottom: 8px;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-contact-item:hover {
+      color: var(--blue);
+    }
+
+    .footer-contact-item svg {
+      width: 14px;
+      height: 14px;
+      color: var(--blue);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .social-ic {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      font-size: .85rem;
+    }
+
+    .social-ic:hover {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .footer-col-title {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      letter-spacing: -.01em;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: .82rem;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-links a::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background .2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--blue);
+    }
+
+    .footer-links a:hover::before {
+      background: var(--blue);
+    }
+
+    .app-dl-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--navy);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 10px;
+      text-decoration: none;
+    }
+
+    .app-dl-btn:hover {
+      background: var(--blue);
+      transform: translateX(4px);
+    }
+
+    .app-dl-btn-icon {
+      font-size: 1.4rem;
+    }
+
+    .app-dl-btn-text .line1 {
+      font-size: .65rem;
+      color: rgba(255, 255, 255, .5);
+      font-weight: 500;
+    }
+
+    .app-dl-btn-text .line2 {
+      font-size: .88rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: .78rem;
+      color: var(--text3);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-bottom-links a {
+      font-size: .78rem;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--blue);
+    }
+
+    /* ══ RIBBON / SECTION BG ══ */
+    .section-white {
+      background: #fff;
+    }
+
+    .section-soft {
+      background: var(--bg);
+    }
+
+    .section-gradient {
+      background: linear-gradient(135deg, #f0f4ff, #fef7f0);
+    }
+
+    /* ══ REVEAL ANIMATIONS ══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.shown {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-l {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal-l.shown {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-r {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal-r.shown {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .delay-1 {
+      transition-delay: .1s;
+    }
+
+    .delay-2 {
+      transition-delay: .2s;
+    }
+
+    .delay-3 {
+      transition-delay: .3s;
+    }
+
+    .delay-4 {
+      transition-delay: .4s;
+    }
+
+    .delay-5 {
+      transition-delay: .5s;
+    }
+
+    /* ══ RESPONSIVE ══ */
+    @media(max-width:900px) {
+
+      .hero-inner,
+      .faq-layout,
+      .nl-inner,
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .services-grid,
+      .deals-grid,
+      .steps-wrap,
+      .airlines-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dest-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .dest-card-big {
+        grid-row: auto;
+      }
+
+      .steps-connector {
+        display: none;
+      }
+
+      .section {
+        padding: 60px 20px;
+      }
+
+      .newsletter {
+        margin: 0 20px 60px;
+      }
+    }
+
+    @media(max-width:600px) {
+
+      .services-grid,
+      .deals-grid,
+      .steps-wrap,
+      .airlines-grid,
+      .dest-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        gap: 0;
+      }
+
+      .nav-link {
+        padding: 8px 10px;
+        font-size: .78rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+            <path d="M17.5 4.5l-4 15-3-7-7-3 15-4z" />
+          </svg>
+        </div>
+        <span class="logo-text">Future<span>Flight</span></span>
+      </a>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="showPage('flights',this)">
+          <span>✈</span> Flights
+        </button>
+        <button class="nav-link" onclick="showPage('hotel',this)">
+          <span>🏨</span> Hotel
+        </button>
+        <button class="nav-link" onclick="showPage('trains',this)">
+          <span>🚂</span> Trains
+        </button>
+        <button class="nav-link" onclick="showPage('buses',this)">
+          <span>🚌</span> Buses
+        </button>
+        <button class="nav-link" onclick="showPage('cabs',this)">
+          <span>🚖</span> Cabs
+        </button>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-ghost">Sign In</button>
+        <button class="btn-solid">Get Started</button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+     PAGE: FLIGHTS
+════════════════════════════════════════ -->
+  <div id="page-flights" class="page active">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-blob1"></div>
+      <div class="hero-blob2"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge">
+            <div class="hero-badge-dot"></div>Ready For Takeoff
+          </div>
+          <h1>Convenient Online<br /><em>Flight Booking</em><br />Services</h1>
+          <p class="hero-desc">Discover seamless travel planning with our user-friendly online flight booking platform —
+            trusted by millions of travellers worldwide.</p>
+          <div class="hero-actions">
+            <button class="hero-cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Let's Go
+            </button>
+            <div class="hero-trust">
+              <div class="hero-trust-avatars">
+                <div></div>
+                <div style="background:linear-gradient(135deg,#fde68a,#fb923c);"></div>
+                <div style="background:linear-gradient(135deg,#a7f3d0,#34d399);"></div>
+              </div>
+              <span>2M+ happy travellers</span>
+            </div>
+          </div>
+          <!-- <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-num">50<span>K+</span></div><div class="hero-stat-label">Hotels Worldwide</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">180<span>+</span></div><div class="hero-stat-label">Countries</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">4.9<span>★</span></div><div class="hero-stat-label">App Rating</div></div>
+        </div> -->
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=700&q=90" alt="Flight" />
+            <div class="hero-img-overlay"></div>
+          </div>
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon blue">✈️</div>
+            <div>
+              <div class="hfc-label">Next Departure</div>
+              <div class="hfc-value">Tokyo → Paris</div>
+              <div class="hfc-sub">↑ 24% cheaper today</div>
+            </div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon coral">🎫</div>
+            <div>
+              <div class="hfc-label">Tickets Booked</div>
+              <div class="hfc-value">12,840 Today</div>
+              <div class="hfc-sub">● Live bookings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Widget -->
+    <div class="search-widget-wrap">
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="swTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M17.5 4.5l-4 15-3-7-7-3 15-4z" />
+            </svg>
+            Flights
+          </button>
+          <button class="sw-tab" onclick="swTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Hotels
+          </button>
+          <button class="sw-tab" onclick="swTab(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="3" width="16" height="16" rx="2" />
+              <path d="M4 11h16M12 3v8" />
+            </svg>
+            Trains
+          </button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-trip-pills">
+            <button class="sw-pill active" onclick="swPill(this)">One Way</button>
+            <button class="sw-pill" onclick="swPill(this)">Round Trip</button>
+            <button class="sw-pill" onclick="swPill(this)">Multi City</button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-fields" style="flex:1;">
+              <div class="sw-field">
+                <div class="sw-field-icon">🛫 <span>From</span></div>
+                <input type="text" placeholder="Tokyo, Japan" />
+                <div class="sw-field-hint">TYO · All airports</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🛬 <span>To</span></div>
+                <input type="text" placeholder="Berlin, Germany" />
+                <div class="sw-field-hint">BER · All airports</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Departure</span></div>
+                <input type="date" value="2024-10-11" />
+                <div class="sw-field-hint">Choose date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Return</span></div>
+                <input type="date" value="2024-12-15" />
+                <div class="sw-field-hint">Optional</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">👥 <span>Travellers</span></div>
+                <select>
+                  <option>1 Adult</option>
+                  <option>2 Adults</option>
+                  <option>2 Adults, 1 Child</option>
+                  <option>Family (4)</option>
+                </select>
+                <div class="sw-field-hint">Economy class</div>
+              </div>
+            </div>
+            <div class="sw-search-btn">
+              <button>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+                Search Flights
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Flight Deals -->
+    <section class="section section-white" style="padding-top:80px;">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Exclusive Offers</div>
+            <h2 class="sec-title">Top <em>Flight Deals</em></h2>
+            <p class="sec-desc">Discover premium flight deals for elite travel experiences at unprecedented prices.</p>
+          </div>
+          <button class="see-all">View All Deals <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></button>
+        </div>
+        <div class="deals-grid">
+          <div class="deal-card reveal delay-1">
+            <div class="deal-img-wrap">
+              <img src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&q=85" alt="Luxury Travel" />
+              <div class="deal-badge">Best Seller</div>
+              <div class="deal-price-badge">From $299</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Luxury International Flight</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg> Tokyo → Paris, Business Class</div>
+              <div class="deal-footer">
+                <div class="deal-stars">
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>5.0</span>
+                </div>
+                <button class="deal-action"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="deal-card reveal delay-2">
+            <div class="deal-img-wrap">
+              <img src="https://images.unsplash.com/photo-1483450388369-9ed95738483c?w=600&q=85" alt="Emirates" />
+              <div class="deal-badge">Hot Deal</div>
+              <div class="deal-price-badge">From $199</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Emirates Business Class</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg> Dubai → London, Direct</div>
+              <div class="deal-footer">
+                <div class="deal-stars">
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20" style="opacity:.3">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>4.0</span>
+                </div>
+                <button class="deal-action"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="deal-card reveal delay-3">
+            <div class="deal-img-wrap">
+              <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&q=85" alt="Qatar Airways" />
+              <div class="deal-badge">Limited</div>
+              <div class="deal-price-badge">From $349</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Qatar Airways First Class</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg> Doha → New York, Non-Stop</div>
+              <div class="deal-footer">
+                <div class="deal-stars">
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>5.0</span>
+                </div>
+                <button class="deal-action"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+                    stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Services -->
+    <section class="section section-soft">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Why Choose Us</div>
+            <h2 class="sec-title">Our <em>Services</em></h2>
+            <p class="sec-desc">Flight services offer convenient travel, connecting people worldwide with ease and
+              excellence.</p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fff0eb;">🎒</div>
+            <h4>Bags Fly Free</h4>
+            <p>Enjoy complimentary checked baggage on all bookings. No hidden fees, no surprises at the airport.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#eff6ff;">🔄</div>
+            <h4>No Change Fees</h4>
+            <p>Life is unpredictable. Change your travel dates anytime without extra charges or penalties.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f0fdf4;">📶</div>
+            <h4>Gate-to-Gate WiFi</h4>
+            <p>Stay connected from boarding to landing with high-speed in-flight internet on all flights.</p>
+          </div>
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fefce8;">💺</div>
+            <h4>Fly in Comfort</h4>
+            <p>Premium seating options with extra legroom, lie-flat beds, and personalised entertainment.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#fdf2f8;">🛡️</div>
+            <h4>100% Secure</h4>
+            <p>All bookings and payments are protected with bank-grade encryption and fraud detection.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f0f9ff;">🎧</div>
+            <h4>24/7 Support</h4>
+            <p>Our expert travel agents are available around the clock to assist with any booking needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trending Destinations -->
+    <section class="section section-white">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Where To Go</div>
+            <h2 class="sec-title">Trending <em>Destinations</em></h2>
+            <p class="sec-desc">Explore the world's most breathtaking destinations — from golden beaches to vibrant
+              cities.</p>
+          </div>
+          <button class="see-all">Explore All <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></button>
+        </div>
+        <div class="dest-grid reveal">
+          <div class="dest-card dest-card-big">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=85" alt="Santorini" />
+            <div class="dest-grad"></div>
+            <div class="dest-tag">⭐ Top Rated</div>
+            <div class="dest-info">
+              <h3>Santorini, Greece</h3>
+              <p>Aegean Sea · Mediterranean</p>
+              <div class="dest-price">Flights from $890</div>
+            </div>
+          </div>
+          <div class="dest-card">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500&q=85" alt="Bali" />
+            <div class="dest-grad"></div>
+            <div class="dest-info">
+              <h3>Bali, Indonesia</h3>
+              <p>Tropical Island</p>
+              <div class="dest-price">From $420</div>
+            </div>
+          </div>
+          <div class="dest-card">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=85" alt="Dubai" />
+            <div class="dest-grad"></div>
+            <div class="dest-info">
+              <h3>Dubai, UAE</h3>
+              <p>Desert Luxury</p>
+              <div class="dest-price">From $550</div>
+            </div>
+          </div>
+          <div class="dest-card">
+            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=500&q=85" alt="Agra" />
+            <div class="dest-grad"></div>
+            <div class="dest-info">
+              <h3>Agra, India</h3>
+              <p>Heritage & Culture</p>
+              <div class="dest-price">From $180</div>
+            </div>
+          </div>
+          <div class="dest-card">
+            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=500&q=85" alt="Maldives" />
+            <div class="dest-grad"></div>
+            <div class="dest-info">
+              <h3>Maldives</h3>
+              <p>Overwater Paradise</p>
+              <div class="dest-price">From $1,200</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section-soft">
+      <div class="container">
+        <div class="faq-layout">
+          <div class="reveal-l">
+            <div class="faq-visual">
+              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&q=85" alt="Support Team" />
+              <div class="faq-visual-card">
+                <div class="fvc-title">Customer Satisfaction</div>
+                <div class="faq-rating">
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>4.9 / 5.0 · 120K+ Reviews</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reveal-r">
+            <div class="sec-eyebrow" style="margin-bottom:10px;">Got Questions?</div>
+            <h2 class="sec-title" style="margin-bottom:8px;">Frequently Asked<br /><em>Questions</em></h2>
+            <p class="sec-desc" style="margin-bottom:32px;">Common FAQs addressed concisely for curious travellers.</p>
+            <div class="faq-list">
+              <div class="faq-item" onclick="faqToggle(this)">
+                <div class="faq-q">
+                  <span class="faq-q-text">How do I book a flight?</span>
+                  <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+                      stroke-linecap="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </div>
+                <div class="faq-a">Search for your route, select your preferred flight and fare class, fill in passenger
+                  details, and complete secure payment to receive your instant e-ticket.</div>
+              </div>
+              <div class="faq-item" onclick="faqToggle(this)">
+                <div class="faq-q">
+                  <span class="faq-q-text">What information do I need to book?</span>
+                  <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+                      stroke-linecap="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </div>
+                <div class="faq-a">You'll need your full name as on your passport, date of birth, contact details, and a
+                  valid payment method. International travel requires passport details.</div>
+              </div>
+              <div class="faq-item open" onclick="faqToggle(this)">
+                <div class="faq-q">
+                  <span class="faq-q-text">Can I book without a passport?</span>
+                  <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+                      stroke-linecap="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </div>
+                <div class="faq-a">International travel requires a valid passport, while domestic flights typically
+                  accept government-issued photo ID. Always check entry requirements before booking.</div>
+              </div>
+              <div class="faq-item" onclick="faqToggle(this)">
+                <div class="faq-q">
+                  <span class="faq-q-text">When should I book for the best deals?</span>
+                  <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"
+                      stroke-linecap="round">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </div>
+                <div class="faq-a">For the best prices, book domestic flights 1–3 months ahead and international flights
+                  2–6 months ahead. Mid-week departures tend to be significantly cheaper.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <div class="newsletter reveal">
+      <div class="nl-pattern"></div>
+      <div class="nl-glow1"></div>
+      <div class="nl-glow2"></div>
+      <div class="nl-inner">
+        <div>
+          <div class="nl-eyebrow">Stay Updated</div>
+          <h2 class="nl-title">Subscribe to Our<br /><em>Newsletter</em></h2>
+          <p class="nl-desc">Get exclusive flight deals, travel tips, and destination inspiration delivered directly to
+            your inbox every week.</p>
+          <div class="nl-form">
+            <input type="email" placeholder="Enter your email address" />
+            <button>Subscribe Now</button>
+          </div>
+        </div>
+        <div class="nl-visual">
+          <div class="nl-feature">
+            <div class="nl-feat-icon">✈️</div>
+            <div class="nl-feat-text">
+              <h4>Exclusive Flight Deals</h4>
+              <p>Up to 40% off on premium routes</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🏨</div>
+            <div class="nl-feat-text">
+              <h4>Hotel Packages</h4>
+              <p>Curated bundles for every budget</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🗺️</div>
+            <div class="nl-feat-text">
+              <h4>Travel Guides</h4>
+              <p>Insider tips from seasoned travellers</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🎁</div>
+            <div class="nl-feat-text">
+              <h4>Loyalty Rewards</h4>
+              <p>Earn points on every booking</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-flights -->
+
+
+  <!-- ═══════════════════════════════════════
+     PAGE: HOTEL
+════════════════════════════════════════ -->
+  <div id="page-hotel" class="page">
+
+    <section class="hero" style="background:linear-gradient(140deg,#fff7f0 0%,#ffffff 50%,#f0f4ff 100%);">
+      <div class="hero-blob1" style="background:radial-gradient(circle,rgba(255,95,61,.06) 0%,transparent 70%);"></div>
+      <div class="hero-blob2" style="background:radial-gradient(circle,rgba(26,86,232,.05) 0%,transparent 70%);"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge"
+            style="background:rgba(255,95,61,.08);border-color:rgba(255,95,61,.2);color:var(--coral);">
+            <div class="hero-badge-dot" style="background:var(--coral);"></div>Quick Reserve
+          </div>
+          <h1>Easy <em style="color:var(--coral);">Hotel Booking</em><br />for Your Getaway</h1>
+          <p class="hero-desc">Experience seamless hotel booking with our user-friendly platform — from boutique stays
+            to world-class resorts.</p>
+          <div class="hero-actions">
+            <button class="hero-cta" style="background:linear-gradient(135deg,var(--coral),#e84a2a);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Find Hotels
+            </button>
+            <div class="hero-trust">
+              <div class="hero-trust-avatars">
+                <div></div>
+                <div style="background:linear-gradient(135deg,#fde68a,#fb923c);"></div>
+                <div style="background:linear-gradient(135deg,#a7f3d0,#34d399);"></div>
+              </div><span>50K+ hotels worldwide</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-num">50<span>K+</span></div>
+              <div class="hero-stat-label">Hotels Listed</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">98<span>%</span></div>
+              <div class="hero-stat-label">Satisfaction Rate</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">5<span>★</span></div>
+              <div class="hero-stat-label">Premium Stays</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=700&q=90" alt="Hotel" />
+            <div class="hero-img-overlay"></div>
+          </div>
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon coral">🏨</div>
+            <div>
+              <div class="hfc-label">Tonight's Top Pick</div>
+              <div class="hfc-value">The Oberoi, Dubai</div>
+              <div class="hfc-sub">↓ 30% off tonight</div>
+            </div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon blue">⭐</div>
+            <div>
+              <div class="hfc-label">Guest Rating</div>
+              <div class="hfc-value">4.9 / 5 Stars</div>
+              <div class="hfc-sub">● Verified Reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="search-widget-wrap">
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="swTab(this)">🏨 Hotels</button>
+          <button class="sw-tab" onclick="swTab(this)">🏡 Villas</button>
+          <button class="sw-tab" onclick="swTab(this)">🏕️ Resorts</button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-trip-pills">
+            <button class="sw-pill active" onclick="swPill(this)">Upto 4 Rooms</button>
+            <button class="sw-pill" onclick="swPill(this)">5 Stars</button>
+            <button class="sw-pill" onclick="swPill(this)">Group Deals</button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-fields" style="flex:1;">
+              <div class="sw-field">
+                <div class="sw-field-icon">🔍 <span>Hotel Name</span></div><select class="si">
+                  <option>Select Hotel Type</option>
+                  <option>Luxury Hotels</option>
+                  <option>Budget Hotels</option>
+                  <option>Boutique Hotels</option>
+                </select>
+                <div class="sw-field-hint">All categories</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">💰 <span>Price Range</span></div><input type="text"
+                  placeholder="$1,000 – $1,500" />
+                <div class="sw-field-hint">Per night</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Check-In</span></div><input type="date" value="2024-10-11" />
+                <div class="sw-field-hint">Select date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Check-Out</span></div><input type="date" value="2024-10-14" />
+                <div class="sw-field-hint">Select date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">👥 <span>Guests</span></div><select>
+                  <option>2 Adults, 1 Kid</option>
+                  <option>1 Adult</option>
+                  <option>4 Adults</option>
+                  <option>Family</option>
+                </select>
+                <div class="sw-field-hint">Rooms: 1</div>
+              </div>
+            </div>
+            <div class="sw-search-btn"><button
+                style="background:linear-gradient(135deg,var(--coral),#e84a2a);box-shadow:0 8px 24px rgba(255,95,61,.3);"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>Search Hotels</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section section-soft" style="padding-top:80px;">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Our Services</div>
+            <h2 class="sec-title">Hotel <em>Amenities</em></h2>
+            <p class="sec-desc">Every booking comes with a curated set of premium amenities for your perfect stay.</p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fff7ed;">🍳</div>
+            <h4>Free Breakfast</h4>
+            <p>Start your day right with a complimentary breakfast included with every booking.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#eff6ff;">🅿️</div>
+            <h4>Free Parking</h4>
+            <p>Hassle-free complimentary parking available at all partner properties.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f0fdf4;">📶</div>
+            <h4>Free High-Speed WiFi</h4>
+            <p>Stay connected with lightning-fast WiFi throughout your entire stay.</p>
+          </div>
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fdf2f8;">🍽️</div>
+            <h4>Fine Dining Restaurant</h4>
+            <p>Indulge in world-class cuisine at our curated hotel restaurants and bars.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#f0f9ff;">❄️</div>
+            <h4>Climate Control</h4>
+            <p>Advanced air conditioning systems ensure your perfect room temperature always.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#fff0eb;">🛎️</div>
+            <h4>24/7 Room Service</h4>
+            <p>Whatever you need, whenever you need it — premium room service around the clock.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Top Picks</div>
+            <h2 class="sec-title">Premium <em>Hotel Deals</em></h2>
+            <p class="sec-desc">Handpicked luxury and boutique hotels at exclusive prices for discerning travellers.</p>
+          </div>
+          <button class="see-all">View All Hotels <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></button>
+        </div>
+        <div class="deals-grid">
+          <div class="deal-card reveal delay-1">
+            <div class="deal-img-wrap"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe2dc?w=600&q=85"
+                alt="Grand Elyse" />
+              <div class="deal-badge">5 Stars</div>
+              <div class="deal-price-badge">$350/night</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Grand Elyse Hotel</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>Paris, France</div>
+              <div class="deal-footer">
+                <div class="deal-stars"><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><span>5.0</span></div><button class="deal-action"><svg viewBox="0 0 24 24" fill="none"
+                    stroke-width="2" stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="deal-card reveal delay-2">
+            <div class="deal-img-wrap"><img
+                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=85" alt="Island Paradise" />
+              <div class="deal-badge">Top Pick</div>
+              <div class="deal-price-badge">$250/night</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Island Paradise Resort</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>Bali, Indonesia</div>
+              <div class="deal-footer">
+                <div class="deal-stars"><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20" style="opacity:.3">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><span>4.0</span></div><button class="deal-action"><svg viewBox="0 0 24 24" fill="none"
+                    stroke-width="2" stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="deal-card reveal delay-3">
+            <div class="deal-img-wrap"><img
+                src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=85" alt="Burj Al Arab" />
+              <div class="deal-badge">Iconic</div>
+              <div class="deal-price-badge">$650/night</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-title">Burj Al Arab, Dubai</div>
+              <div class="deal-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>Dubai, UAE</div>
+              <div class="deal-footer">
+                <div class="deal-stars"><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><svg viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg><span>5.0</span></div><button class="deal-action"><svg viewBox="0 0 24 24" fill="none"
+                    stroke-width="2" stroke-linecap="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="newsletter reveal">
+      <div class="nl-pattern"></div>
+      <div class="nl-glow1"></div>
+      <div class="nl-glow2"></div>
+      <div class="nl-inner">
+        <div>
+          <div class="nl-eyebrow">Stay Updated</div>
+          <h2 class="nl-title">Get Exclusive<br /><em>Hotel Offers</em></h2>
+          <p class="nl-desc">Subscribe and receive handpicked hotel deals, last-minute discounts, and travel inspiration
+            every week.</p>
+          <div class="nl-form"><input type="email" placeholder="Enter your email address" /><button>Subscribe
+              Now</button></div>
+        </div>
+        <div class="nl-visual">
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🏨</div>
+            <div class="nl-feat-text">
+              <h4>Exclusive Hotel Deals</h4>
+              <p>Up to 50% off on premium properties</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🌟</div>
+            <div class="nl-feat-text">
+              <h4>5-Star Experiences</h4>
+              <p>Curated luxury stays worldwide</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🎁</div>
+            <div class="nl-feat-text">
+              <h4>Member Rewards</h4>
+              <p>Earn points on every hotel booking</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🔔</div>
+            <div class="nl-feat-text">
+              <h4>Price Drop Alerts</h4>
+              <p>Be notified when prices drop</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-hotel -->
+
+
+  <!-- ═══════════════════════════════════════
+     PAGE: TRAINS
+════════════════════════════════════════ -->
+  <div id="page-trains" class="page">
+
+    <section class="hero" style="background:linear-gradient(140deg,#f0fdf4 0%,#ffffff 50%,#ecfdf5 100%);">
+      <div class="hero-blob1" style="background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 70%);"></div>
+      <div class="hero-blob2" style="background:radial-gradient(circle,rgba(5,150,105,.05) 0%,transparent 70%);"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge"
+            style="background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2);color:#059669;">
+            <div class="hero-badge-dot" style="background:#059669;"></div>Railway Ready
+          </div>
+          <h1>Effortless <em style="color:#059669;">Train Booking</em><br />Made Simple</h1>
+          <p class="hero-desc">Train booking offers convenience, speed, and flexibility for hassle-free travel planning
+            across the nation and beyond.</p>
+          <div class="hero-actions">
+            <button class="hero-cta"
+              style="background:linear-gradient(135deg,#059669,#047857);box-shadow:0 8px 28px rgba(5,150,105,.3);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Find Trains
+            </button>
+            <div class="hero-trust">
+              <div class="hero-trust-avatars">
+                <div></div>
+                <div style="background:linear-gradient(135deg,#a7f3d0,#34d399);"></div>
+                <div style="background:linear-gradient(135deg,#bfdbfe,#60a5fa);"></div>
+              </div><span>5M+ train tickets booked</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-num">10<span>K+</span></div>
+              <div class="hero-stat-label">Routes Available</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">99<span>%</span></div>
+              <div class="hero-stat-label">On-Time Accuracy</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">24<span>/7</span></div>
+              <div class="hero-stat-label">PNR Tracking</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=700&q=90" alt="Train" />
+            <div class="hero-img-overlay"></div>
+          </div>
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon blue">🚂</div>
+            <div>
+              <div class="hfc-label">Next Train</div>
+              <div class="hfc-value">Rajdhani Express</div>
+              <div class="hfc-sub">Departs in 45 mins</div>
+            </div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon coral">🎫</div>
+            <div>
+              <div class="hfc-label">Seats Available</div>
+              <div class="hfc-value">AC 2-Tier · 24 left</div>
+              <div class="hfc-sub">● Book now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="search-widget-wrap">
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="swTab(this)">🚂 Book Ticket</button>
+          <button class="sw-tab" onclick="swTab(this)">📋 PNR Status</button>
+          <button class="sw-tab" onclick="swTab(this)">🗓️ Train Schedule</button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-trip-pills">
+            <button class="sw-pill active" onclick="swPill(this)">One Way</button>
+            <button class="sw-pill" onclick="swPill(this)">Round Trip</button>
+            <button class="sw-pill" onclick="swPill(this)">Multi City</button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-fields" style="flex:1;">
+              <div class="sw-field">
+                <div class="sw-field-icon">🚉 <span>From Station</span></div><input type="text"
+                  placeholder="Enter station name" />
+                <div class="sw-field-hint">City or station code</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🚉 <span>To Station</span></div><input type="text"
+                  placeholder="Enter station name" />
+                <div class="sw-field-hint">City or station code</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Date</span></div><input type="date" value="2024-10-11" />
+                <div class="sw-field-hint">Journey date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">💺 <span>Class</span></div><select>
+                  <option>Select Class</option>
+                  <option>Sleeper (SL)</option>
+                  <option>AC 3-Tier (3A)</option>
+                  <option>AC 2-Tier (2A)</option>
+                  <option>First AC (1A)</option>
+                </select>
+                <div class="sw-field-hint">Travel class</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">👥 <span>Passengers</span></div><select>
+                  <option>1 Passenger</option>
+                  <option>2 Passengers</option>
+                  <option>3 Passengers</option>
+                  <option>4 Passengers</option>
+                </select>
+                <div class="sw-field-hint">General quota</div>
+              </div>
+            </div>
+            <div class="sw-search-btn"><button
+                style="background:linear-gradient(135deg,#059669,#047857);box-shadow:0 8px 24px rgba(5,150,105,.3);"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>Search Trains</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section section-soft" style="padding-top:80px;">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Onboard Amenities</div>
+            <h2 class="sec-title">Train <em>Services</em></h2>
+            <p class="sec-desc">Everything you need for a comfortable, safe, and enjoyable train journey.</p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#eff6ff;">📶</div>
+            <h4>Onboard Wi-Fi</h4>
+            <p>Stay connected with high-speed internet available on select premium train routes.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#fff0eb;">💺</div>
+            <h4>Extra Leg Room</h4>
+            <p>Premium coaches offer spacious seating with extra legroom for ultimate comfort.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#fefce8;">🧳</div>
+            <h4>Luggage Storage</h4>
+            <p>Dedicated overhead storage space for luggage and personal belongings.</p>
+          </div>
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#f0fdf4;">🎫</div>
+            <h4>Seat Reservations</h4>
+            <p>Reserve your preferred seat or sleeping berth in advance for guaranteed comfort.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#f0f9ff;">❄️</div>
+            <h4>Air Conditioning</h4>
+            <p>All AC coaches maintain the perfect temperature throughout your journey.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#fdf2f8;">🛡️</div>
+            <h4>Safety & Security</h4>
+            <p>Comprehensive safety measures including CCTV surveillance on all train routes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Step By Step</div>
+            <h2 class="sec-title">Easy Steps to <em>Book Your Journey</em></h2>
+            <p class="sec-desc">From search to seat — booking your train ticket takes just three simple steps.</p>
+          </div>
+        </div>
+        <div class="steps-wrap">
+          <div class="steps-connector"></div>
+          <div class="step-card reveal delay-1">
+            <div class="step-num">01</div>
+            <div class="step-icon-ring" style="background:#eff6ff;border-color:var(--blue-light);">🔍</div>
+            <h4>Search Destination</h4>
+            <ul class="step-bullets">
+              <li>Enter departure station</li>
+              <li>Enter destination station</li>
+              <li>Select date of journey</li>
+              <li>Choose travel class</li>
+            </ul>
+          </div>
+          <div class="step-card featured reveal delay-2">
+            <div class="step-num">02</div>
+            <div class="step-icon-ring">🎫</div>
+            <h4>Select Your Ticket</h4>
+            <ul class="step-bullets">
+              <li>View available trains</li>
+              <li>Compare fares and classes</li>
+              <li>Select preferred seats</li>
+              <li>Fill passenger details</li>
+            </ul>
+          </div>
+          <div class="step-card reveal delay-3">
+            <div class="step-num">03</div>
+            <div class="step-icon-ring" style="background:#f0fdf4;border-color:#bbf7d0;">💳</div>
+            <h4>Pay & Enjoy Journey</h4>
+            <ul class="step-bullets">
+              <li>Pay via UPI, Card or NetBanking</li>
+              <li>Receive instant e-ticket</li>
+              <li>Track PNR status live</li>
+              <li>Board and enjoy your ride</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-soft">
+      <div class="container">
+        <div class="sec-head reveal" style="justify-content:center;text-align:center;">
+          <div class="sec-head-left" style="flex:none;text-align:center;">
+            <div class="sec-eyebrow">Payment Partners</div>
+            <h2 class="sec-title">Accepted <em>Payment Methods</em></h2>
+            <p class="sec-desc" style="margin:0 auto;">We support all major payment gateways for safe, seamless
+              transactions.</p>
+          </div>
+        </div>
+        <div class="pay-grid reveal">
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#003087;"></div>PayPal
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#e30613;"></div>M-PESA
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#005baa;"></div>DPO Group
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#635bff;"></div>Stripe
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#e60000;"></div>Vodafone Pay
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#22c55e;"></div>N Pay
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#1a56e8;"></div>Pesapal
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#f59e0b;"></div>Tingg
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#06b6d4;"></div>AamarPay
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#8b5cf6;"></div>Dubale
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#0052cc;"></div>Razorpay
+          </div>
+          <div class="pay-chip">
+            <div class="pay-dot" style="background:#10b981;"></div>PayTM
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="newsletter reveal">
+      <div class="nl-pattern"></div>
+      <div class="nl-glow1"></div>
+      <div class="nl-glow2"></div>
+      <div class="nl-inner">
+        <div>
+          <div class="nl-eyebrow">Never Miss A Deal</div>
+          <h2 class="nl-title">Train Deals in<br /><em>Your Inbox</em></h2>
+          <p class="nl-desc">Get the best train fares, Tatkal alerts, and route updates delivered directly to your
+            inbox.</p>
+          <div class="nl-form"><input type="email" placeholder="Enter your email address" /><button>Subscribe
+              Now</button></div>
+        </div>
+        <div class="nl-visual">
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🚂</div>
+            <div class="nl-feat-text">
+              <h4>Fare Alerts</h4>
+              <p>Know when prices drop on your route</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">⚡</div>
+            <div class="nl-feat-text">
+              <h4>Tatkal Notifications</h4>
+              <p>Instant alerts for last-minute bookings</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">📍</div>
+            <div class="nl-feat-text">
+              <h4>Live PNR Tracking</h4>
+              <p>Real-time train status in your mail</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🎁</div>
+            <div class="nl-feat-text">
+              <h4>Exclusive Discounts</h4>
+              <p>Member-only offers on premium classes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-trains -->
+
+
+  <!-- ═══════════════════════════════════════
+     PAGE: BUSES
+════════════════════════════════════════ -->
+  <div id="page-buses" class="page">
+    <section class="hero" style="background:linear-gradient(140deg,#fffbeb 0%,#ffffff 50%,#fef9c3 100%);">
+      <div class="hero-blob1" style="background:radial-gradient(circle,rgba(245,158,11,.07) 0%,transparent 70%);"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge"
+            style="background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:#b45309;">
+            <div class="hero-badge-dot" style="background:#f59e0b;"></div>Road Ready
+          </div>
+          <h1>Safe & Comfortable<br /><em style="color:#d97706;">Bus Booking</em><br />Made Simple</h1>
+          <p class="hero-desc">Book premium AC sleeper buses, Volvo coaches, and semi-luxury options at unbeatable fares
+            across hundreds of routes.</p>
+          <div class="hero-actions">
+            <button class="hero-cta"
+              style="background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 8px 28px rgba(245,158,11,.3);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Find Buses
+            </button>
+            <div class="hero-trust">
+              <div class="hero-trust-avatars">
+                <div></div>
+                <div style="background:linear-gradient(135deg,#fde68a,#fbbf24);"></div>
+                <div style="background:linear-gradient(135deg,#fed7aa,#fb923c);"></div>
+              </div><span>3M+ bus tickets sold</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-num">5<span>K+</span></div>
+              <div class="hero-stat-label">Bus Routes</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">500<span>+</span></div>
+              <div class="hero-stat-label">Operators</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">4.8<span>★</span></div>
+              <div class="hero-stat-label">Rating</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=700&q=90" alt="Bus" />
+            <div class="hero-img-overlay"></div>
+          </div>
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon blue">🚌</div>
+            <div>
+              <div class="hfc-label">Next Departure</div>
+              <div class="hfc-value">Mumbai → Pune</div>
+              <div class="hfc-sub">Volvo AC · ₹450</div>
+            </div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon coral">💺</div>
+            <div>
+              <div class="hfc-label">Seats Left</div>
+              <div class="hfc-value">8 Seats Available</div>
+              <div class="hfc-sub">● Book before full</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="search-widget-wrap">
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="swTab(this)">🚌 Book Bus</button>
+          <button class="sw-tab" onclick="swTab(this)">📋 My Bookings</button>
+          <button class="sw-tab" onclick="swTab(this)">🎫 Group Booking</button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-trip-pills">
+            <button class="sw-pill active" onclick="swPill(this)">One Way</button>
+            <button class="sw-pill" onclick="swPill(this)">Round Trip</button>
+            <button class="sw-pill" onclick="swPill(this)">Charter Bus</button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-fields" style="flex:1;">
+              <div class="sw-field">
+                <div class="sw-field-icon">🚏 <span>From City</span></div><input type="text"
+                  placeholder="Enter departure city" />
+                <div class="sw-field-hint">All bus stops</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🚏 <span>To City</span></div><input type="text"
+                  placeholder="Enter arrival city" />
+                <div class="sw-field-hint">All bus stops</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Date</span></div><input type="date" value="2024-10-11" />
+                <div class="sw-field-hint">Journey date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🚌 <span>Bus Type</span></div><select>
+                  <option>All Types</option>
+                  <option>AC Seater</option>
+                  <option>AC Sleeper</option>
+                  <option>Volvo</option>
+                  <option>Non-AC</option>
+                </select>
+                <div class="sw-field-hint">Select preference</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">👥 <span>Passengers</span></div><select>
+                  <option>1 Passenger</option>
+                  <option>2 Passengers</option>
+                  <option>3 Passengers</option>
+                  <option>4+ Passengers</option>
+                </select>
+                <div class="sw-field-hint">Number of seats</div>
+              </div>
+            </div>
+            <div class="sw-search-btn"><button
+                style="background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 8px 24px rgba(245,158,11,.35);"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>Search Buses</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="section section-soft" style="padding-top:80px;">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Why Travel With Us</div>
+            <h2 class="sec-title">Premium <em>Bus Services</em></h2>
+            <p class="sec-desc">Connecting cities with comfort, safety, and reliability at affordable fares.</p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fff7ed;">💺</div>
+            <h4>Comfortable Seating</h4>
+            <p>Reclining seats with extra legroom, charging ports, and reading lights on all premium buses.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#eff6ff;">❄️</div>
+            <h4>AC Coaches</h4>
+            <p>Powerful air conditioning maintaining the perfect cabin temperature throughout the journey.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f0fdf4;">📶</div>
+            <h4>Free WiFi</h4>
+            <p>High-speed in-bus WiFi so you can work, stream, and stay connected on the road.</p>
+          </div>
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fefce8;">📍</div>
+            <h4>Live Bus Tracking</h4>
+            <p>Track your bus in real-time and share your live location with family for peace of mind.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#fdf2f8;">🛡️</div>
+            <h4>Safety Guaranteed</h4>
+            <p>All drivers verified, buses regularly inspected, and GPS-monitored for your safety.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f0f9ff;">🎫</div>
+            <h4>Easy Cancellation</h4>
+            <p>Hassle-free cancellation up to 2 hours before departure with instant refund processing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="newsletter reveal">
+      <div class="nl-pattern"></div>
+      <div class="nl-glow1"></div>
+      <div class="nl-glow2"></div>
+      <div class="nl-inner">
+        <div>
+          <div class="nl-eyebrow">Stay Updated</div>
+          <h2 class="nl-title">Get the Best<br /><em>Bus Deals</em></h2>
+          <p class="nl-desc">Subscribe for route deals, flash sales, and exclusive offers on bus tickets delivered to
+            your inbox.</p>
+          <div class="nl-form"><input type="email" placeholder="Enter your email address" /><button>Subscribe
+              Now</button></div>
+        </div>
+        <div class="nl-visual">
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🚌</div>
+            <div class="nl-feat-text">
+              <h4>Flash Bus Deals</h4>
+              <p>Up to 60% off on select routes</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">💺</div>
+            <div class="nl-feat-text">
+              <h4>Seat Upgrade Alerts</h4>
+              <p>Get notified when premium seats open</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🗺️</div>
+            <div class="nl-feat-text">
+              <h4>New Route Launches</h4>
+              <p>Be first to know about new routes</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🎁</div>
+            <div class="nl-feat-text">
+              <h4>Loyalty Cashback</h4>
+              <p>Earn cashback on every bus booking</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-buses -->
+
+
+  <!-- ═══════════════════════════════════════
+     PAGE: CABS
+════════════════════════════════════════ -->
+  <div id="page-cabs" class="page">
+    <section class="hero" style="background:linear-gradient(140deg,#fdf2f8 0%,#ffffff 50%,#f5f3ff 100%);">
+      <div class="hero-blob1" style="background:radial-gradient(circle,rgba(236,72,153,.06) 0%,transparent 70%);"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge"
+            style="background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.2);color:#7c3aed;">
+            <div class="hero-badge-dot" style="background:#a855f7;"></div>Ride With Us
+          </div>
+          <h1>Quick & Reliable<br /><em style="color:#a855f7;">Cab Booking</em><br />at Your Fingertips</h1>
+          <p class="hero-desc">Book a cab instantly — airport transfers, outstation rides, and city trips with
+            professional, verified drivers at transparent pricing.</p>
+          <div class="hero-actions">
+            <button class="hero-cta"
+              style="background:linear-gradient(135deg,#a855f7,#7c3aed);box-shadow:0 8px 28px rgba(168,85,247,.3);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Book a Cab
+            </button>
+            <div class="hero-trust">
+              <div class="hero-trust-avatars">
+                <div></div>
+                <div style="background:linear-gradient(135deg,#e9d5ff,#c084fc);"></div>
+                <div style="background:linear-gradient(135deg,#fbcfe8,#f472b6);"></div>
+              </div><span>1M+ rides completed</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-num">10<span>K+</span></div>
+              <div class="hero-stat-label">Verified Drivers</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">0<span>%</span></div>
+              <div class="hero-stat-label">Surge Pricing</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">4.9<span>★</span></div>
+              <div class="hero-stat-label">Driver Rating</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-img-wrap">
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=700&q=90" alt="Cab" />
+            <div class="hero-img-overlay"></div>
+          </div>
+          <div class="hero-float-card hfc1">
+            <div class="hfc-icon blue">🚗</div>
+            <div>
+              <div class="hfc-label">Nearest Driver</div>
+              <div class="hfc-value">3 minutes away</div>
+              <div class="hfc-sub">● Available now</div>
+            </div>
+          </div>
+          <div class="hero-float-card hfc2">
+            <div class="hfc-icon coral">💰</div>
+            <div>
+              <div class="hfc-label">Airport Transfer</div>
+              <div class="hfc-value">Fixed ₹699</div>
+              <div class="hfc-sub">No surge, ever</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="search-widget-wrap">
+      <div class="search-widget">
+        <div class="sw-tabs">
+          <button class="sw-tab active" onclick="swTab(this)">🚗 City Ride</button>
+          <button class="sw-tab" onclick="swTab(this)">✈️ Airport Transfer</button>
+          <button class="sw-tab" onclick="swTab(this)">🗺️ Outstation</button>
+          <button class="sw-tab" onclick="swTab(this)">⏱️ Hourly Rental</button>
+        </div>
+        <div class="sw-body">
+          <div class="sw-trip-pills">
+            <button class="sw-pill active" onclick="swPill(this)">One Way</button>
+            <button class="sw-pill" onclick="swPill(this)">Round Trip</button>
+          </div>
+          <div class="sw-row">
+            <div class="sw-fields" style="flex:1;">
+              <div class="sw-field">
+                <div class="sw-field-icon">📍 <span>Pickup Location</span></div><input type="text"
+                  placeholder="Enter pickup address" />
+                <div class="sw-field-hint">Door-to-door service</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🏁 <span>Drop Location</span></div><input type="text"
+                  placeholder="Enter destination" />
+                <div class="sw-field-hint">Any location</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">📅 <span>Pickup Date</span></div><input type="date" value="2024-10-11" />
+                <div class="sw-field-hint">Select date</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🕐 <span>Pickup Time</span></div><input type="time" value="10:00" />
+                <div class="sw-field-hint">Select time</div>
+              </div>
+              <div class="sw-field">
+                <div class="sw-field-icon">🚗 <span>Cab Type</span></div><select>
+                  <option>Economy (4 Seater)</option>
+                  <option>Premium Sedan</option>
+                  <option>SUV (6 Seater)</option>
+                  <option>Luxury</option>
+                </select>
+                <div class="sw-field-hint">Choose vehicle</div>
+              </div>
+            </div>
+            <div class="sw-search-btn"><button
+                style="background:linear-gradient(135deg,#a855f7,#7c3aed);box-shadow:0 8px 24px rgba(168,85,247,.35);"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>Book Cab</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="section section-soft" style="padding-top:80px;">
+      <div class="container">
+        <div class="sec-head reveal">
+          <div class="sec-head-left">
+            <div class="sec-eyebrow">Our Benefits</div>
+            <h2 class="sec-title">Why Book <em>With Us</em></h2>
+            <p class="sec-desc">Professional cab services providing safe, comfortable, and reliable rides for every
+              journey.</p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#fdf2f8;">🚗</div>
+            <h4>Premium Vehicles</h4>
+            <p>Choose from economy, premium sedans, SUVs, and luxury vehicles for every occasion.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#eff6ff;">📍</div>
+            <h4>Live GPS Tracking</h4>
+            <p>Track your ride in real-time and share your live location with trusted contacts.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#fefce8;">💰</div>
+            <h4>Fixed Transparent Pricing</h4>
+            <p>Zero surge pricing — what you see is what you pay. No hidden charges ever.</p>
+          </div>
+          <div class="svc-card reveal delay-1">
+            <div class="svc-icon-wrap" style="background:#f0fdf4;">✅</div>
+            <h4>Verified Drivers</h4>
+            <p>Every driver is background-checked, trained, and rated by thousands of passengers.</p>
+          </div>
+          <div class="svc-card reveal delay-2">
+            <div class="svc-icon-wrap" style="background:#fff0eb;">📶</div>
+            <h4>In-Car WiFi</h4>
+            <p>Complimentary high-speed WiFi available in all premium and luxury vehicle categories.</p>
+          </div>
+          <div class="svc-card reveal delay-3">
+            <div class="svc-icon-wrap" style="background:#f5f3ff;">✈️</div>
+            <h4>Airport Transfers</h4>
+            <p>Punctual pick-ups and drop-offs at all major airports — track flights automatically.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="newsletter reveal">
+      <div class="nl-pattern"></div>
+      <div class="nl-glow1"></div>
+      <div class="nl-glow2"></div>
+      <div class="nl-inner">
+        <div>
+          <div class="nl-eyebrow">Ride Smarter</div>
+          <h2 class="nl-title">Exclusive <em>Ride Offers</em><br />Await You</h2>
+          <p class="nl-desc">Subscribe for first-ride discounts, cashback offers, and exclusive cab deals delivered to
+            your inbox.</p>
+          <div class="nl-form"><input type="email" placeholder="Enter your email address" /><button>Subscribe
+              Now</button></div>
+        </div>
+        <div class="nl-visual">
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🚗</div>
+            <div class="nl-feat-text">
+              <h4>First Ride Free</h4>
+              <p>Get your first cab ride completely free</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">💸</div>
+            <div class="nl-feat-text">
+              <h4>Cashback Rewards</h4>
+              <p>Earn cashback on every cab booking</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">✈️</div>
+            <div class="nl-feat-text">
+              <h4>Airport Deal Alerts</h4>
+              <p>Exclusive rates for airport transfers</p>
+            </div>
+          </div>
+          <div class="nl-feature">
+            <div class="nl-feat-icon">🎯</div>
+            <div class="nl-feat-text">
+              <h4>Priority Booking</h4>
+              <p>Skip the queue with premium membership</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-cabs -->
+
+
+  <!-- ═══════════════════════════════════════
+     FOOTER (shared)
+════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <a href="#" class="logo"
+            style="text-decoration:none;display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"
+                stroke-linecap="round">
+                <path d="M17.5 4.5l-4 15-3-7-7-3 15-4z" />
+              </svg></div>
+            <span class="logo-text">Future<span>Flight</span></span>
+          </a>
+          <p class="footer-tagline">Your all-in-one travel booking platform — flights, hotels, trains, buses, and cabs
+            at the best prices.</p>
+          <a href="mailto:hello@futureflight.com" class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>hello@futureflight.com</a>
+          <a href="tel:+14986549876" class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17z" />
+            </svg>+1 (498) 654-9876</a>
+          <div class="footer-socials">
+            <div class="social-ic">𝕏</div>
+            <div class="social-ic">in</div>
+            <div class="social-ic">📸</div>
+            <div class="social-ic">▶</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Top Destinations</h4>
+          <ul class="footer-links">
+            <li><a href="#">New York</a></li>
+            <li><a href="#">London</a></li>
+            <li><a href="#">Dubai</a></li>
+            <li><a href="#">Paris</a></li>
+            <li><a href="#">Tokyo</a></li>
+            <li><a href="#">Maldives</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Useful Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Company Profile</a></li>
+            <li><a href="#">Team Members</a></li>
+            <li><a href="#">Partner With Us</a></li>
+            <li><a href="#">Support Center</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Travel Services</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="showPage('flights',document.querySelectorAll('.nav-link')[0])">✈ Flights</a></li>
+            <li><a href="#" onclick="showPage('hotel',document.querySelectorAll('.nav-link')[1])">🏨 Hotels</a></li>
+            <li><a href="#" onclick="showPage('trains',document.querySelectorAll('.nav-link')[2])">🚂 Trains</a></li>
+            <li><a href="#" onclick="showPage('buses',document.querySelectorAll('.nav-link')[3])">🚌 Buses</a></li>
+            <li><a href="#" onclick="showPage('cabs',document.querySelectorAll('.nav-link')[4])">🚖 Cabs</a></li>
+            <li><a href="#">📦 Packages</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Download App</h4>
+          <p style="font-size:.82rem;color:var(--text2);line-height:1.6;margin-bottom:20px;">Book on the go — manage
+            trips, get deal alerts, and access e-tickets offline.</p>
+          <a class="app-dl-btn" href="#">
+            <div class="app-dl-btn-icon">🍎</div>
+            <div class="app-dl-btn-text">
+              <div class="line1">Download on the</div>
+              <div class="line2">App Store</div>
+            </div>
+          </a>
+          <a class="app-dl-btn" href="#">
+            <div class="app-dl-btn-icon">▶</div>
+            <div class="app-dl-btn-text">
+              <div class="line1">Get it on</div>
+              <div class="line2">Google Play</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 FutureFlight. All rights reserved. Made with ❤️ for travellers
+          worldwide.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // ── Page switching ──
+    function showPage(name, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      const page = document.getElementById('page-' + name);
+      if (page) page.classList.add('active');
+      if (btn) btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(initReveal, 80);
+    }
+
+    // ── Search widget tabs ──
+    function swTab(el) {
+      el.closest('.sw-tabs').querySelectorAll('.sw-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // ── Trip pills ──
+    function swPill(el) {
+      el.closest('.sw-trip-pills').querySelectorAll('.sw-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // ── FAQ toggle ──
+    function faqToggle(el) {
+      const isOpen = el.classList.contains('open');
+      el.closest('.faq-list').querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) el.classList.add('open');
+    }
+
+    // ── Scroll reveal ──
+    function initReveal() {
+      const els = document.querySelectorAll('.page.active .reveal, .page.active .reveal-l, .page.active .reveal-r');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const delay = parseFloat(getComputedStyle(entry.target).transitionDelay) * 1000 || 0;
+            setTimeout(() => entry.target.classList.add('shown'), delay);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(el => { if (!el.classList.contains('shown')) observer.observe(el); });
+    }
+
+    // Newsletter reveal (outside .page)
+    const nlEls = document.querySelectorAll('.newsletter.reveal');
+    const nlObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('shown'); nlObs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    nlEls.forEach(el => nlObs.observe(el));
+
+    // Init on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initReveal, 100);
+    });
+  </script>
+</body>
+
+</html>
